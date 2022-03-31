@@ -24,10 +24,10 @@ class App {
     const note = new NoteComponent("note title", "note content");
     const todo = new TodoComponent("Todo title", "to do item");
 
-    image.attachTo(appRoot, "beforeend");
-    note.attachTo(appRoot, "beforeend");
-    todo.attachTo(appRoot, "beforeend");
-    video.attachTo(appRoot, "beforeend");
+    this.page.addChild(image);
+    this.page.addChild(note);
+    this.page.addChild(todo);
+    this.page.addChild(video);
   }
 }
 
