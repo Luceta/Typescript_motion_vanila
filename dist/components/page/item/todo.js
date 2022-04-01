@@ -8,7 +8,7 @@ export class TodoComponent extends BaseComponent {
         </section>`);
         const titleElement = this.element.querySelector(".todo__title");
         titleElement.textContent = title;
-        const todoElement = this.element.querySelector(".todo-label");
+        const todoElement = this.element.querySelector('.todo-label');
         todoElement.textContent = todo;
     }
 }
