@@ -1,18 +1,5 @@
 import { BaseComponent } from "./component.js";
-export class PageComponent extends BaseComponent {
-    constructor() {
-        super('<ul class="page">This is PageComponent</ul>');
-    }
-    addChild(section) {
-        const item = new PageItmeComponent();
-        item.addChild(section);
-        item.attachTo(this.element, "beforeend");
-        item.setOnCloseListner(() => {
-            item.removeFrom(this.element);
-        });
-    }
-}
-class PageItmeComponent extends BaseComponent {
+export class PageItemComponent extends BaseComponent {
     constructor() {
         super(`<li class="page-item">
            <section class="page-item__body"></section>
@@ -31,5 +18,19 @@ class PageItmeComponent extends BaseComponent {
     }
     setOnCloseListner(listener) {
         this.closeListner = listener;
+    }
+}
+export class PageComponent extends BaseComponent {
+    constructor(pageItemConstructor) {
+        super('<ul class="page"></ul>');
+        this.pageItemConstructor = pageItemConstructor;
+    }
+    addChild(section) {
+        const item = new this.pageItemConstructor();
+        item.addChild(section);
+        item.attachTo(this.element, "beforeend");
+        item.setOnCloseListner(() => {
+            item.removeFrom(this.element);
+        });
     }
 }

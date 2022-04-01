@@ -4,26 +4,23 @@ export interface Composable {
   //조립하할 수  있는 뜻뜻
   addChild(child: Component): void;
 }
-export class PageComponent
-  extends BaseComponent<HTMLUListElement>
-  implements Composable
-{
-  constructor() {
-    super('<ul class="page">This is PageComponent</ul>');
-  }
-
-  addChild(section: Component) {
-    const item = new PageItmeComponent();
-    item.addChild(section);
-    item.attachTo(this.element, "beforeend");
-    item.setOnCloseListner(() => {
-      item.removeFrom(this.element);
-    });
-  }
-}
 
 type OnCloseListener = () => void;
-class PageItmeComponent extends BaseComponent<HTMLElement> {
+
+interface SectionContainer extends Component, Composable {
+  setOnCloseListner(listener: OnCloseListener): void;
+}
+
+type SectionContainerConstructor = {
+  new (): SectionContainer;
+};
+//page Itemcomponent : Close기능은 가지고 태어나는 친구
+
+// DarePageItemComponent  extends BaseComponent<HTMLElement> implements SectionContainer
+export class PageItemComponent
+  extends BaseComponent<HTMLElement>
+  implements SectionContainer
+{
   private closeListner?: OnCloseListener;
   constructor() {
     super(`<li class="page-item">
@@ -46,5 +43,22 @@ class PageItmeComponent extends BaseComponent<HTMLElement> {
   }
   setOnCloseListner(listener: OnCloseListener) {
     this.closeListner = listener;
+  }
+}
+
+export class PageComponent
+  extends BaseComponent<HTMLUListElement>
+  implements Composable
+{
+  constructor(private pageItemConstructor: SectionContainerConstructor) {
+    super('<ul class="page"></ul>');
+  }
+  addChild(section: Component) {
+    const item = new this.pageItemConstructor();
+    item.addChild(section);
+    item.attachTo(this.element, "beforeend");
+    item.setOnCloseListner(() => {
+      item.removeFrom(this.element);
+    });
   }
 }
