@@ -4,12 +4,19 @@ import { BaseComponent, Component } from "../page/component.js";
 type OnCloseListener = () => void;
 type OnSubmitListener = () => void;
 
-export class InputDialog
-  extends BaseComponent<HTMLElement>
-  implements Composable
-{
-  closeListner?: OnCloseListener;
-  submitListner?: OnSubmitListener;
+export interface MediaData {
+  readonly title: string;
+  readonly url: string;
+}
+
+export interface TextData {
+  readonly title: string;
+  readonly body: string;
+}
+export class InputDialog extends BaseComponent<HTMLElement> implements Composable {
+  closeListener?: OnCloseListener;
+  submitListener?: OnSubmitListener;
+
   constructor() {
     super(`<dialog class="dialog">
           <div class="dialog__container">
@@ -18,32 +25,25 @@ export class InputDialog
             <button class="dialog__submit">ADD</button>
           </div>
         </dialog>`);
-    const closeBtn = this.element.querySelector(".close")! as HTMLElement;
-    // closeBtn.addEventListener("click","") 보통은 addEventListner로서 여러가지 이벤트를 할당해줌!
-
+    const closeBtn = this.element.querySelector('.close')! as HTMLElement;
     closeBtn.onclick = () => {
-      this.submitListner && this.submitListner();
+      this.closeListener && this.closeListener();
     };
 
-    const submitBtn = this.element.querySelector(
-      ".dialog__submit"
-    )! as HTMLElement;
-
+    const submitBtn = this.element.querySelector('.dialog__submit')! as HTMLElement;
     submitBtn.onclick = () => {
-      this.closeListner && this.closeListner();
+      this.submitListener && this.submitListener();
     };
   }
 
-  setOnCloseListner(listenr: OnCloseListener) {
-    this.closeListner = listenr;
+  setOnCloseListenr(listener: OnCloseListener) {
+    this.closeListener = listener;
   }
-
-  setOnSubmitListner(listner: OnSubmitListener) {
-    this.submitListner = listner;
+  setOnSubmitListenr(listener: OnSubmitListener) {
+    this.submitListener = listener;
   }
-
-  addChild(child: Component): void {
-    const body = this.element.querySelector("#dialog__body")! as HTMLElement;
+  addChild(child: Component) {
+    const body = this.element.querySelector('#dialog__body')! as HTMLElement;
     child.attachTo(body);
   }
 }

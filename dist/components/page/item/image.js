@@ -5,10 +5,11 @@ export class ImageComponent extends BaseComponent {
             <div class="image__holder"><img class="image__thumbnail"></div>
             <h2 class="page-item__title image__title"></h2>
           </section>`);
-        const imageElement = this.element.querySelector(".image__thumbnail");
+        const imageElement = this.element.querySelector('.image__thumbnail');
         imageElement.src = url;
         imageElement.alt = title;
-        const titleElement = this.element.querySelector(".image__title");
+        console.log(imageElement, "check");
+        const titleElement = this.element.querySelector('.image__title');
         titleElement.textContent = title;
     }
 }

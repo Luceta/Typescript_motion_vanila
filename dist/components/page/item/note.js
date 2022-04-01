@@ -1,13 +1,13 @@
 import { BaseComponent } from "../component.js";
 export class NoteComponent extends BaseComponent {
-    constructor(title, content) {
+    constructor(title, body) {
         super(`<section class="note">
-              <h2 class="note__title"></h2>
-              <p class="note__content"></p>
-            </section>`);
+            <h2 class="page-item__title note__title"></h2>
+            <p class="note__body"></p>
+        </section>`);
         const titleElement = this.element.querySelector(".note__title");
         titleElement.textContent = title;
-        const contentElement = this.element.querySelector(".note__content");
-        contentElement.textContent = content;
+        const bodyElement = this.element.querySelector(".note__body");
+        bodyElement.textContent = body;
     }
 }

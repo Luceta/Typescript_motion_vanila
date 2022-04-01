@@ -8,23 +8,23 @@ export class InputDialog extends BaseComponent {
             <button class="dialog__submit">ADD</button>
           </div>
         </dialog>`);
-        const closeBtn = this.element.querySelector(".close");
+        const closeBtn = this.element.querySelector('.close');
         closeBtn.onclick = () => {
-            this.submitListner && this.submitListner();
+            this.closeListener && this.closeListener();
         };
-        const submitBtn = this.element.querySelector(".dialog__submit");
+        const submitBtn = this.element.querySelector('.dialog__submit');
         submitBtn.onclick = () => {
-            this.closeListner && this.closeListner();
+            this.submitListener && this.submitListener();
         };
     }
-    setOnCloseListner(listenr) {
-        this.closeListner = listenr;
+    setOnCloseListenr(listener) {
+        this.closeListener = listener;
     }
-    setOnSubmitListner(listner) {
-        this.submitListner = listner;
+    setOnSubmitListenr(listener) {
+        this.submitListener = listener;
     }
     addChild(child) {
-        const body = this.element.querySelector("#dialog__body");
+        const body = this.element.querySelector('#dialog__body');
         child.attachTo(body);
     }
 }
